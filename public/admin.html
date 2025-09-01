@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin - Orders</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body { background: #fff5f5; font-family: Arial, sans-serif; padding: 20px; }
+    h1 { text-align: center; margin-bottom: 20px; }
+    table { width: 100%; border-collapse: collapse; margin: auto; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+    th, td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+    th { background: #ff8fab; color: white; }
+    tr:nth-child(even) { background: #ffe6e6; }
+    button { padding: 6px 10px; margin: 2px; border: none; border-radius: 6px; cursor: pointer; }
+    .confirm { background: #4caf50; color: white; }
+    .delete { background: #f44336; color: white; }
+    .popup-box {
+      position: fixed; top: 30%; left: 50%; transform: translate(-50%, -50%);
+      background: #fff8f0; border: 2px solid #ffb347; box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      padding: 20px 30px; z-index: 9999; border-radius: 16px; text-align: center;
+      animation: fadeInScale 0.5s ease;
+    }
+    .popup-box h3 { margin: 0; color: #d35400; font-size: 20px; }
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
+      to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <h1>🍦 Admin Orders Dashboard</h1>
+  <table id="ordersTable">
+    <thead>
+      <tr>
+        <th>Flavor</th>
+        <th>Price</th>
+        <th>Time</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    async function safeFetch(path, options) {
+      try {
+        const r = await fetch(path, options);
+        if (r.ok) return r;
+        throw new Error("relative failed");
+      } catch (_) {
+        const abs = "http://localhost:5000" + (path.startsWith("/") ? path : "/" + path);
+        return await fetch(abs, options);
+      }
+    }
+
+    function showPopup(msg) {
+      const popup = document.createElement("div");
+      popup.className = "popup-box";
+      popup.innerHTML = `<h3>${msg}</h3>`;
+      document.body.appendChild(popup);
+      setTimeout(() => popup.remove(), 2000);
+    }
+
+    async function loadOrders() {
+      const tbody = document.querySelector("#ordersTable tbody");
+      const res = await safeFetch("/orders");
+      const orders = await res.json();
+      tbody.innerHTML = "";
+
+      if (!orders || orders.length === 0) {
+        tbody.innerHTML = "<tr><td colspan='4'>No pending orders 🎉</td></tr>";
+        return;
+      }
+
+      orders.forEach(order => {
+        const tr = document.createElement("tr");
+        tr.dataset.id = order.id;
+        tr.innerHTML = `
+          <td>${order.flavor}</td>
+          <td>${order.price}</td>
+          <td>${new Date(order.time).toLocaleString()}</td>
+          <td class="actions-cell"></td>
+        `;
+
+        const actionsCell = tr.querySelector(".actions-cell");
+
+        // Confirm button
+        const confirmBtn = document.createElement("button");
+        confirmBtn.className = "confirm";
+        confirmBtn.textContent = "Confirm ✅";
+        confirmBtn.addEventListener("click", async () => {
+          await safeFetch(`/orders/${order.id}`, { method: "DELETE" });
+          tr.remove();
+          showPopup(`Order for ${order.flavor} confirmed ✅`);
+        });
+
+        // Cancel button
+        const cancelBtn = document.createElement("button");
+        cancelBtn.className = "delete";
+        cancelBtn.textContent = "Cancel ❌";
+        cancelBtn.addEventListener("click", async () => {
+          await safeFetch(`/orders/${order.id}`, { method: "DELETE" });
+          tr.remove();
+          showPopup(`Order for ${order.flavor} cancelled ❌`);
+        });
+
+        actionsCell.appendChild(confirmBtn);
+        actionsCell.appendChild(cancelBtn);
+        tbody.appendChild(tr);
+      });
+    }
+
+    loadOrders();
+  </script>
+</body>
+</html>
