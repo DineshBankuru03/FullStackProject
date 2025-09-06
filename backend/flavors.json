@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Chocolate Truffle",
+    "price": "₹200",
+    "img": "https://tse1.mm.bing.net/th/id/OIP.xWqcg72lg98TUrfuf3OKhwHaE7?pid=Api&P=0&h=180"
+  },
+  {
+    "name": "Almond Classic",
+    "price": "₹189",
+    "img": "https://nutriholist.com/wp-content/uploads/2021/06/Dark-Chocolate-Almond-Magnum4-1.jpg"
+  },
+  {
+    "name": "Brownie Crunch",
+    "price": "₹249",
+    "img": "https://recipesblob.oetker.in/assets/0e7149831748458c9502e361e889f726/1272x764/brownie-with-vanilla-ice-cream.jpg"
+  },
+  {
+    "name": "Double Caramel",
+    "price": "₹199",
+    "img": "https://ourbestbites.com/wp-content/uploads/2017/08/UB5A1946.jpg"
+  },
+  {
+    "name": "Cookie Duet",
+    "price": "₹159",
+    "img": "https://www.coldstonecreamery.com/assets/img/products/cookies/sandwiches-perfectduet.jpg"
+  },
+  {
+    "name": "Dark Chocolate",
+    "price": "₹249",
+    "img": "https://ketopots.com/wp-content/uploads/2019/05/4a-keto-chocolate-ice-cream.jpg"
+  },
+  {
+    "name": "White Chocolate & Cookies",
+    "price": "₹299",
+    "img": "https://twosugarbugs.com/wp-content/uploads/2022/06/easy-white-chocolate-blueberry-ice-cream-FI-720x960.jpg"
+  },
+  {
+    "name": "Double Raspberry",
+    "price": "₹349",
+    "img": "https://emmaduckworthbakes.com/wp-content/uploads/2022/06/No-Churn-Raspberry-Ice-Cream.jpg"
+  },
+  {
+    "name": "Vegan Classic",
+    "price": "₹199",
+    "img": "https://www.freefromheaven.com/wp-content/uploads/2016/06/Vegan-Mint-Chocolate-Chip-Ice-Cream-8.jpg"
+  },
+  {
+    "name": "Gold Caramel Billionaire",
+    "price": "₹429",
+    "img": "https://assets.unileversolutions.com/v1/35491029.jpg"
+  }
+]
